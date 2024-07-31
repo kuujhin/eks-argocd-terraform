@@ -6,25 +6,25 @@ variable "az" {
   default = [ "ap-northeast-2a", "ap-northeast-2c" ]
 }
 
-data "aws_vpc" "main" {
-  filter {
-    name = "tag:Name"
-    values = [ "ultra-devops-vpc" ]
-  }
-}
-
-# resource "aws_vpc" "main" {
-#  cidr_block = "10.24.0.0/16"
-
-#  tags = {
-#    Name = "ultra-devops-vpc"
-#  }
+# data "aws_vpc" "main" {
+#   filter {
+#     name = "tag:Name"
+#     values = [ "ultra-devops-vpc" ]
+#   }
 # }
+
+resource "aws_vpc" "main" {
+ cidr_block = "10.48.0.0/16"
+
+ tags = {
+   Name = "ultra-devops-vpc"
+ }
+}
 
 resource "aws_subnet" "public_subnet" {
  count                   = 2
- vpc_id                  = data.aws_vpc.main.id
- cidr_block              = cidrsubnet(data.aws_vpc.main.cidr_block, 8, count.index)
+ vpc_id                  = aws_vpc.main.id
+ cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)
 #  availability_zone       = data.aws_availability_zones.available.names[count.index]
  availability_zone = var.az[count.index]
  map_public_ip_on_launch = true
@@ -36,7 +36,7 @@ resource "aws_subnet" "public_subnet" {
 
 
 resource "aws_internet_gateway" "main" {
- vpc_id = data.aws_vpc.main.id
+ vpc_id = aws_vpc.main.id
 
  tags = {
    Name = "main-igw"
@@ -44,7 +44,7 @@ resource "aws_internet_gateway" "main" {
 }
 
 resource "aws_route_table" "public" {
- vpc_id = data.aws_vpc.main.id
+ vpc_id = aws_vpc.main.id
 
  route {
    cidr_block = "0.0.0.0/0"
