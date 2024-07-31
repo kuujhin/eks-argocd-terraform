@@ -28,3 +28,10 @@ resource "aws_eks_node_group" "main" {
    Name = "main-eks-node-group"
  }
 }
+
+
+resource "kubernetes_namespace" "example" {
+  metadata {
+    name = "example-namespace"
+  }
+}
