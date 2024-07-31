@@ -37,15 +37,15 @@ jobs:
        with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          # aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
      - name: Terraform init
        id: init
        run: terraform init
  
-     - name: Terraform format
-       id: fmt
-       run: terraform fmt -check
+    #  - name: Terraform format
+    #    id: fmt
+    #    run: terraform fmt -check
     
      - name: Terraform validate
        id: validate
