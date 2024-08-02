@@ -38,7 +38,7 @@ jobs:
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
 
-      # - name: Update kubeconfig
+      # - name: Update kubeconfig 
       #   run: aws eks --region ap-northeast-2 update-kubeconfig --name main-eks-cluster
       
       # - name: Deploy application

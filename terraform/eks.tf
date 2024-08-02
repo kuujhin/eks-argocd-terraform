@@ -32,6 +32,13 @@ resource "aws_eks_node_group" "main" {
 
 resource "kubernetes_namespace" "example" {
   metadata {
-    name = "github-actions-test"
+    name = "example-namespace"
+  }
+}
+
+resource "kubernetes_service_account" "example" {
+  metadata {
+    name = "example-service-account"
+    namespace = kubernetes_namespace.example.metadata[0].name
   }
 }
