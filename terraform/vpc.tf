@@ -1,23 +1,16 @@
-# data "aws_availability_zones" "available" {}
+data "aws_availability_zones" "available" {}
 
-variable "az" {
-  description = "aws_availability_zones"
-  type = list(string)
-  default = [ "ap-northeast-2a", "ap-northeast-2c" ]
-}
-
-# data "aws_vpc" "main" {
-#   filter {
-#     name = "tag:Name"
-#     values = [ "ultra-devops-vpc" ]
-#   }
+# variable "az" {
+#   description = "aws_availability_zones"
+#   type = list(string)
+#   default = [ "ap-northeast-2a", "ap-northeast-2c" ]
 # }
 
 resource "aws_vpc" "main" {
  cidr_block = "10.48.0.0/16"
 
  tags = {
-   Name = "ultra-devops-vpc"
+   Name = "intern-devops-vpc"
  }
 }
 
@@ -25,12 +18,12 @@ resource "aws_subnet" "public_subnet" {
  count                   = 2
  vpc_id                  = aws_vpc.main.id
  cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)
-#  availability_zone       = data.aws_availability_zones.available.names[count.index]
- availability_zone = var.az[count.index]
+ availability_zone       = data.aws_availability_zones.available.names[count.index]
+#  availability_zone = var.az[count.index]
  map_public_ip_on_launch = true
 
  tags = {
-   Name = "public-subnet-${count.index}"
+   Name = "intern-public-subnet-${count.index}"
  }
 }
 
@@ -39,7 +32,7 @@ resource "aws_internet_gateway" "main" {
  vpc_id = aws_vpc.main.id
 
  tags = {
-   Name = "main-igw"
+   Name = "intern-igw"
  }
 }
 
@@ -52,7 +45,7 @@ resource "aws_route_table" "public" {
  }
 
  tags = {
-   Name = "main-route-table"
+   Name = "intern-route-table"
  }
 }
 

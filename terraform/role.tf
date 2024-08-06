@@ -4,7 +4,7 @@ locals {
 
 
 resource "aws_iam_role" "eks_cluster_role" {
- name = "eks-role"
+ name = "intern-eks-role"
 
  assume_role_policy = <<EOF
 {
@@ -23,7 +23,7 @@ resource "aws_iam_role" "eks_cluster_role" {
 EOF
 
  tags = {
-   Name = "eks-role"
+   Name = "intern-eks-role"
  }
 }
 
@@ -33,7 +33,7 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_role_attachment" {
 }
 
 resource "aws_iam_role" "eks_node_role" {
- name = "eks-node-role"
+ name = "intern-eks-node-role"
 
  assume_role_policy = <<EOF
 {
@@ -52,7 +52,7 @@ resource "aws_iam_role" "eks_node_role" {
 EOF
 
  tags = {
-   Name = "eks-node-role"
+   Name = "intern-eks-node-role"
  }
 }
 
